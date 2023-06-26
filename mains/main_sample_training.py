@@ -36,10 +36,10 @@ if __name__ == '__main__':
     os.environ["CUDA_VISIBLE_DEVICES"] = config["cuda_devices"]
     device_ids = [d for d in range(len(os.environ["CUDA_VISIBLE_DEVICES"].split(','))) ]
     
-    dataset_img_test_lip = load_dataset("imagefolder", data_dir="./datasets/LIP/lip_img_sample", drop_labels=True, split='validation')
-    dataset_seg_test_lip = load_dataset("imagefolder", data_dir="./datasets/LIP/lip_seg_sample", drop_labels=True, split='validation')
-    dataset_img_train_lip = load_dataset("imagefolder", data_dir="./datasets/LIP/lip_img_sample", drop_labels=True, split='train')
-    dataset_seg_train_lip = load_dataset("imagefolder", data_dir="./datasets/LIP/lip_seg_sample", drop_labels=True, split='train')
+    dataset_img_test_lip = load_dataset("imagefolder", data_dir=config["dataset_files"]["image"]["path"], drop_labels=True, split='validation')
+    dataset_seg_test_lip = load_dataset("imagefolder", data_dir=config["dataset_files"]["segmentation"]["path"], drop_labels=True, split='validation')
+    dataset_img_train_lip = load_dataset("imagefolder", data_dir=config["dataset_files"]["image"]["path"], drop_labels=True, split='train')
+    dataset_seg_train_lip = load_dataset("imagefolder", data_dir=config["dataset_files"]["segmentation"]["path"], drop_labels=True, split='train')
 
     
     dataset_name = config["use_dataset_config"]

@@ -16,6 +16,14 @@
             "num_workers": 2
         }
     },
+    "dataset_files":{
+        "image":{
+            "path":"./datasets/LIP/lip_img_sample"
+        },
+        "segmentation":{
+            "path":"./datasets/LIP/lip_seg_sample"
+        }
+    },    
     "optimizer": {
         "type": "SGD",
         "args":{
