@@ -1,0 +1,103 @@
+{
+    "exp_name": "LIP_origin_sample_exp",
+    "n_gpu": 1,
+    "cuda_devices": "4,5",
+    "main_device_id": "cuda:0",
+
+    "use_dataset_config" : "lip_origin",
+
+    "data_loader": {
+        "type": "MnistDataLoader",
+        "args":{
+            "data_dir": "data/",
+            "batch_size": 2,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 2
+        }
+    },
+    "optimizer": {
+        "type": "SGD",
+        "args":{
+            "lr": 0.005,
+            "momentum":0.9,
+            "weight_decay": 0.0005
+        }
+    },
+    "loss": "nll_loss",
+    "metrics": [
+        "loss_classifier", "loss_box_reg", "loss_objectness", "loss_rpn_box_reg",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=1 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=10 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] "
+    ],
+    "__metrics_old": ["accuracy", "top_k_acc"], 
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 20,
+
+        "save_dir": "saved/",
+        "save_period": 5,
+        "verbosity": 0,
+        
+        "monitor": "min val_loss",
+        "early_stop": 10,
+
+        "tensorboard": true,
+        "print_freq": 100
+    },
+    "detector": {
+        "iou_threshold": 0.45,
+        "score_threshold": 0.5
+    },
+    "datasets":{
+        "lip_new_mapping":{
+            "ds_name": "lip",
+            "class_list_old": [ "background", "hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "coat", "sock", "pants", 
+                                "j-suits", "scarf", "skirt", "face", "l-arm", 
+                                "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ],
+            "class_list_new": [ "background", "hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "sock", "pants", "j-suits", 
+                                "scarf", "skirt", "face", "arm", "leg",
+                                "shoe"],
+            "diaplay_class_ls":["hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "sock", "pants", "j-suits", 
+                                "scarf", "skirt", "face", "arm", "leg",
+                                "shoe"],
+            "class_map" :  {"0":0, "1":1, "2":2,"3":3, "4":4, 
+                            "5":5, "6":6, "7":5, "8":7, "9":8, 
+                            "10":9, "11":10, "12":11, "13":12, "14":13,
+                            "15":13, "16":14, "17":14, "18":15, "19":15},
+            "__end": "this field is not used, can delete"
+        },
+        "lip_origin":{
+            "ds_name": "lip",
+            "class_list": [ "hat", "hair", "glove", "glass", 
+                            "u-cloth", "dress", "coat", "sock", "pants", 
+                            "j-suits", "scarf", "skirt", "face", "l-arm", 
+                            "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ],
+            "diaplay_class_ls":[
+                            "hat", "hair", "glove", "glass", 
+                            "u-cloth", "dress", "coat", "sock", "pants", 
+                            "j-suits", "scarf", "skirt", "face", "l-arm", 
+                            "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe"],
+            "__end": "this field is not used, can delete"
+        }
+    }
+}
