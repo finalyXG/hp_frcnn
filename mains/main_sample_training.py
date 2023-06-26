@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     
     dataset_name = config["use_dataset_config"]
-    dataset_info_dict = config["datasets"][dataset_name]
+    dataset_info_dict = config["dataset_options"][dataset_name]
     
     if "class_list_new" in dataset_info_dict.keys():
         cls_ls = dataset_info_dict["class_list_new"]

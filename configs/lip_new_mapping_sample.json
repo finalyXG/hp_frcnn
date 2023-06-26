@@ -65,7 +65,7 @@
         "iou_threshold": 0.45,
         "score_threshold": 0.5
     },
-    "datasets":{
+    "dataset_options":{
         "lip_new_mapping":{
             "ds_name": "lip",
             "class_list_old": [ "hat", "hair", "glove", "glass", 
