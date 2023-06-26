@@ -110,3 +110,6 @@ datasets/
 .vscode/
 .idea/
 __MACOSX/
+notebook/tmp.ipynb
+notebook
+tmp.png
