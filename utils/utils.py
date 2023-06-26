@@ -65,3 +65,19 @@ class MetricTracker:
 
     def result(self):
         return dict(self._data.average)
+    
+    
+def get_refine_box_result(predictions, iou_threshold, score_threshold, label_name_dict_ls=None):
+    
+    for pred in predictions:
+        indices = ops.nms(pred['boxes'], pred['scores'], iou_threshold=iou_threshold)
+        pred['boxes_nms'] = pred['boxes'][indices].detach().cpu()
+        pred['scores_nms'] = pred['scores'][indices].detach().cpu()
+        pred['labels_nms'] = pred['labels'][indices].detach().cpu()
+    tmp_boxes = predictions[0]['boxes_nms'][torch.where(predictions[0]['scores_nms']   > score_threshold )]
+    tmp_labels = predictions[0]['labels_nms'][torch.where(predictions[0]['scores_nms'] > score_threshold )]
+    if label_name_dict_ls is not None:
+        tmp_labels = label_name_dict_ls[tmp_labels.numpy().tolist()].tolist()
+
+    return tmp_boxes, tmp_labels
+
