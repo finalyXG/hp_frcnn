@@ -18,3 +18,17 @@ def top_k_acc(output, target, k=3):
         for i in range(k):
             correct += torch.sum(pred[:, i] == target).item()
     return correct / len(target)
+
+def loss_classifier(output, target):
+    pass
+
+def loss_box_reg(output, target):
+    pass
+
+def loss_objectness(output, target):
+    pass
+
+def loss_rpn_box_reg(output, target):
+    pass
+
+
