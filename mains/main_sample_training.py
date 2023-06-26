@@ -92,8 +92,7 @@ if __name__ == '__main__':
     metrics = [getattr(module_metric, met) if hasattr(module_metric, met) else met for met in config['metrics']]    
     trainable_params = filter(lambda p: p.requires_grad, model.parameters())
     non_train_params = filter(lambda p: not p.requires_grad, model.parameters())
-    optimizer = torch.optim.SGD(trainable_params, lr=0.005,
-                                momentum=0.9, weight_decay=0.0005)
+    optimizer = config.init_obj('optimizer', torch.optim, trainable_params)
     
     warmup_factor = 1.0 / 1000
     warmup_iters = min(1000, len(train_set) - 1)
