@@ -1,0 +1,31 @@
+{
+    "exp_name": "LIP_bbox_generation",
+    "dataset_files":{
+        "image":{
+            "path":"./datasets/LIP/lip_img_sample"
+        },
+        "segmentation":{
+            "path":"./datasets/LIP/lip_seg_sample"
+        }
+    },
+    "dataset":{
+        "ds_name": "lip",
+        "class_list": [     "hat", "hair", "glove", "glass", 
+                            "u-cloth", "dress", "coat", "sock", "pants", 
+                            "j-suits", "scarf", "skirt", "face", "l-arm", 
+                            "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ]
+    },
+    "data_loader": {
+        "args":{
+            "data_dir": "data/",
+            "batch_size": 2,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 2
+        }
+    },
+    "trainer": {
+        "save_dir": "saved/"
+    }
+
+}

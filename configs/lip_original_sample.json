@@ -7,7 +7,6 @@
     "use_dataset_config" : "lip_origin",
 
     "data_loader": {
-        "type": "MnistDataLoader",
         "args":{
             "data_dir": "data/",
             "batch_size": 2,
@@ -76,11 +75,11 @@
     "dataset_options":{
         "lip_new_mapping":{
             "ds_name": "lip",
-            "class_list_old": [ "background", "hat", "hair", "glove", "glass", 
+            "class_list_old": [ "hat", "hair", "glove", "glass", 
                                 "u-cloth", "dress", "coat", "sock", "pants", 
                                 "j-suits", "scarf", "skirt", "face", "l-arm", 
                                 "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ],
-            "class_list_new": [ "background", "hat", "hair", "glove", "glass", 
+            "class_list_new": [ "hat", "hair", "glove", "glass", 
                                 "u-cloth", "dress", "sock", "pants", "j-suits", 
                                 "scarf", "skirt", "face", "arm", "leg",
                                 "shoe"],

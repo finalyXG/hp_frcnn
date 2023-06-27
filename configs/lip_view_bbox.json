@@ -1,20 +1,5 @@
 {
-    "exp_name": "LIP_new_mapping_sample_exp",
-    "n_gpu": 1,
-    "cuda_devices": "4,5",
-    "main_device_id": "cuda:0",
-
-    "use_dataset_config" : "lip_new_mapping",
-
-    "data_loader": {
-        "args":{
-            "data_dir": "data/",
-            "batch_size": 2,
-            "shuffle": true,
-            "validation_split": 0.1,
-            "num_workers": 2
-        }
-    },
+    "exp_name": "LIP_bbox_generation",
     "dataset_files":{
         "image":{
             "path":"./datasets/LIP/lip_img_sample"
@@ -23,55 +8,11 @@
             "path":"./datasets/LIP/lip_seg_sample"
         }
     },
-    "optimizer": {
-        "type": "SGD",
-        "args":{
-            "lr": 0.005,
-            "momentum":0.9,
-            "weight_decay": 0.0005
-        }
-    },
-    "loss": "nll_loss",
-    "metrics": [
-        "loss_classifier", "loss_box_reg", "loss_objectness", "loss_rpn_box_reg",
-        "Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
-        "Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] ",
-        "Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] ",
-        "Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] ",
-        "Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] ",
-        "Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] ",
-        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=1 ] ",
-        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=10 ] ",
-        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
-        "Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] ",
-        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] ",
-        "Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] "
-    ],
-    "__metrics_old": ["accuracy", "top_k_acc"], 
-    "lr_scheduler": {
-        "type": "StepLR",
-        "args": {
-            "step_size": 50,
-            "gamma": 0.1
-        }
-    },
+    "use_dataset_config" : "lip_new_mapping",
     "trainer": {
-        "epochs": 20,
-
-        "save_dir": "saved/",
-        "save_period": 5,
-        "verbosity": 0,
-        
-        "monitor": "min val_loss",
-        "early_stop": 10,
-
-        "tensorboard": true,
-        "print_freq": 100
+        "save_dir": "saved/"
     },
-    "detector": {
-        "iou_threshold": 0.45,
-        "score_threshold": 0.5
-    },
+    "output_image": "tmp.png",
     "dataset_options":{
         "lip_new_mapping":{
             "ds_name": "lip",
@@ -107,4 +48,5 @@
             "__end": "this field is not used, can delete"
         }
     }
+
 }
