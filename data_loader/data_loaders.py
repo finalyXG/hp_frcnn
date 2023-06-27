@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from random import Random
 
@@ -55,7 +56,7 @@ class DataPartitioner(object):
     
 
 class BboxDataset(Dataset):
-    def __init__(self, ds, ds_seg, train_size, ds_name,cls_ls, cls_ls_old=[], cls_map=None, is_train=True):
+    def __init__(self, ds, ds_seg, train_size, ds_name,cls_ls, cls_ls_old=[], cls_map=None, is_train=True, mode="get"):
         super().__init__()
         self.ds = ds
         self.ds_seg = ds_seg
@@ -67,10 +68,12 @@ class BboxDataset(Dataset):
         self.cls_ls_old = cls_ls_old
         self.cls_ls_new = cls_ls
         self.cls_ls = cls_ls
-        self.cls_dict = dict(zip(range(len(self.cls_ls_new)), self.cls_ls_new))
+        self.cls_dict = dict(zip(range(1,len(self.cls_ls_new)+1), self.cls_ls_new))
         self.cls_dict_len = len(self.cls_dict)
         self.cls_old_num = len(self.cls_ls_old)
         self.cls_new_num = len(self.cls_ls_new)
+        self.mode = mode
+        assert self.mode in ['get', 'gen']
         
     def get_transform(self):
         transforms = []
@@ -85,13 +88,12 @@ class BboxDataset(Dataset):
         # return 600
         return len(self.ds)
     
-    def get_seg_map_bbox(self, seg, kernel = np.ones((10, 10),np.uint8)):
-        bbox_dict = {i+1: [] for i in range(self.cls_old_num)}
+    def get_seg_map_bbox(self, seg, kernel = np.ones((10, 10), np.uint8)):
+        bbox_dict = {i+1: [] for i in range(len(self.cls_ls))}
         # if self.ds_name == 'cihp':
         #     seg = np.where(seg == 10, 13, seg)
             
-        print(444/0)
-        for i in range(self.cls_old_num):
+        for i in range(len(self.cls_ls)):
             cls_ind = i + 1
             # Perform erosion
             eroded_img = (seg == cls_ind).astype(np.uint8)
@@ -114,12 +116,8 @@ class BboxDataset(Dataset):
                 bboxes = [[min_x, min_y, max_x - min_x, max_y - min_y]]
             
             bbox_dict[cls_ind] = bboxes
-        
-        bbox_dict_new = {i+1: [] for i in range(self.cls_new_num)}
-        for cls_ind, item in bbox_dict.items():
-            bbox_dict_new[self.cls_map[cls_ind]].extend(bbox_dict[cls_ind])
             
-        return bbox_dict_new
+        return bbox_dict
     
     def resize_with_max_size(self, im, max_size):
         # Open the image file
@@ -172,7 +170,12 @@ class BboxDataset(Dataset):
             return pil_image
         if plt_show:
             plt.show()
-            
+    
+    def __getitem__(self, idx):
+        if self.mode == 'get':
+            return self.__getitem__get(idx)
+        else:
+            return self.__getitem__gen(idx)        
         
     # def __getitem__(self, idx):
     def __getitem__gen(self, idx):
@@ -181,12 +184,15 @@ class BboxDataset(Dataset):
         if not p.exists():
             seg = np.array(self.ds_seg[idx]['image'])  
             bbox_dict = self.get_seg_map_bbox(seg)
+            save_dir = '/'.join(str(p).split('/')[:-1])
+            if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
             np.save(str(p), np.array(bbox_dict))
             
         return 0
     
     # def __getitem__new(self, idx):
-    def __getitem__(self, idx):
+    def __getitem__get(self, idx):
         p = Path(self.ds[idx]['image'].filename.replace(f"{self.ds_name}_img",f"{self.ds_name}_bbox").replace(".jpg",".npy"))
         bbox_dict = {}
         assert p.exists(), f"Can not find: {p}"
@@ -219,7 +225,7 @@ class BboxDataset(Dataset):
         
 
             
-        assert torch.all(target['labels'] < self.cls_dict_len) 
+        assert torch.all(target['labels'] <= self.cls_dict_len), f"{target['labels']}, and self.cls_dict_len={self.cls_dict_len}"
         
         if self.transforms is not None:
             img, target = self.transforms(img, target)
