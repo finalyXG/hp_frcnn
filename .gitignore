@@ -104,7 +104,7 @@ ENV/
 data/
 input/
 saved/
-datasets/
+datasets/LIP/lip_bbox*
 
 # editor, os cache directory
 .vscode/
@@ -112,4 +112,4 @@ datasets/
 __MACOSX/
 notebook/tmp.ipynb
 notebook
-tmp.png
+tmp/
