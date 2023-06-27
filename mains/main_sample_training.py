@@ -47,13 +47,12 @@ if __name__ == '__main__':
     
     if "class_list_new" in dataset_info_dict.keys():
         cls_ls = dataset_info_dict["class_list_new"]
-        cls_map = dict(dataset_info_dict["class_map"])
-        cls_map = {int(key): value for key, value in cls_map.items()}
         cls_ls_old = dataset_info_dict["class_list_new"]
     else:
         cls_ls = dataset_info_dict["class_list"]
         cls_ls_old = []
-        cls_map = None
+    cls_map = dict(dataset_info_dict["class_map"])
+    cls_map = {int(key): value for key, value in cls_map.items()}
         
     # create model and move it to GPU with id rank
     # cls_ls = config["dataset_info"]["class_list"]

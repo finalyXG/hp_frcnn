@@ -73,26 +73,6 @@
         "score_threshold": 0.5
     },
     "dataset_options":{
-        "lip_new_mapping":{
-            "ds_name": "lip",
-            "class_list_old": [ "hat", "hair", "glove", "glass", 
-                                "u-cloth", "dress", "coat", "sock", "pants", 
-                                "j-suits", "scarf", "skirt", "face", "l-arm", 
-                                "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ],
-            "class_list_new": [ "hat", "hair", "glove", "glass", 
-                                "u-cloth", "dress", "sock", "pants", "j-suits", 
-                                "scarf", "skirt", "face", "arm", "leg",
-                                "shoe"],
-            "diaplay_class_ls":["hat", "hair", "glove", "glass", 
-                                "u-cloth", "dress", "sock", "pants", "j-suits", 
-                                "scarf", "skirt", "face", "arm", "leg",
-                                "shoe"],
-            "class_map" :  {"0":0, "1":1, "2":2,"3":3, "4":4, 
-                            "5":5, "6":6, "7":5, "8":7, "9":8, 
-                            "10":9, "11":10, "12":11, "13":12, "14":13,
-                            "15":13, "16":14, "17":14, "18":15, "19":15},
-            "__end": "this field is not used, can delete"
-        },
         "lip_origin":{
             "ds_name": "lip",
             "class_list": [ "hat", "hair", "glove", "glass", 
@@ -104,6 +84,10 @@
                             "u-cloth", "dress", "coat", "sock", "pants", 
                             "j-suits", "scarf", "skirt", "face", "l-arm", 
                             "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe"],
+            "class_map" :  {"1":0, "2":1,"3":2, "4":3, 
+                            "5":4, "6":5, "7":6, "8":7, "9":8, 
+                            "10":9, "11":10, "12":11, "13":12, "14":13,
+                            "15":14, "16":15, "17":16, "18":17, "19":18},
             "__end": "this field is not used, can delete"
         }
     }
