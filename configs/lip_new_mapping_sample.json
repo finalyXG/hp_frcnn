@@ -62,7 +62,7 @@
         "save_period": 5,
         "verbosity": 0,
         
-        "monitor": "min val_loss",
+        "monitor": "min Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
         "early_stop": 10,
 
         "tensorboard": true,
