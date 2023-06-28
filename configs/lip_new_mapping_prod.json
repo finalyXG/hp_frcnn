@@ -1,0 +1,111 @@
+{
+    "exp_name": "LIP_new_mapping_prod_exp",
+    "n_gpu": 1,
+    "cuda_devices": "4,5",
+    "main_device_id": "cuda:0",
+
+    "use_dataset_config" : "lip_new_mapping",
+
+    "data_loader": {
+        "args":{
+            "data_dir": "data/",
+            "batch_size": 4,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 2
+        }
+    },
+    "dataset_files":{
+        "image":{
+            "path":"../sam_pascal/datasets/LIP/lip_img"
+        },
+        "segmentation":{
+            "path":"../sam_pascal/datasets/LIP/lip_seg"
+        }
+    },
+    "optimizer": {
+        "type": "SGD",
+        "args":{
+            "lr": 0.005,
+            "momentum":0.9,
+            "weight_decay": 0.0005
+        }
+    },
+    "disable_load_optimizer_checkpoint": true,
+    "loss": "nll_loss",
+    "metrics": [
+        "loss_classifier", "loss_box_reg", "loss_objectness", "loss_rpn_box_reg",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50      | area=   all | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.75      | area=   all | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] ",
+        "Average Precision  (AP) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=1 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=10 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area= small | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] ",
+        "Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] "
+    ],
+    "__metrics_old": ["accuracy", "top_k_acc"], 
+    "lr_scheduler": {
+        "type": "StepLR",
+        "args": {
+            "step_size": 50,
+            "gamma": 0.1
+        }
+    },
+    "trainer": {
+        "epochs": 100,
+
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        
+        "monitor": "min Average Precision  (AP) @[ IoU=0.50:0.95 | area=   all | maxDets=100 ] ",
+        "early_stop": 10,
+
+        "tensorboard": true,
+        "print_freq": 100
+    },
+    "detector": {
+        "iou_threshold": 0.45,
+        "score_threshold": 0.5
+    },
+    "dataset_options":{
+        "lip_new_mapping":{
+            "ds_name": "lip",
+            "class_list_old": [ "hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "coat", "sock", "pants", 
+                                "j-suits", "scarf", "skirt", "face", "l-arm", 
+                                "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ],
+            "class_list_new": [ "hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "sock", "pants", "j-suits", 
+                                "scarf", "skirt", "face", "arm", "leg",
+                                "shoe"],
+            "diaplay_class_ls":["hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "sock", "pants", "j-suits", 
+                                "scarf", "skirt", "face", "arm", "leg",
+                                "shoe"],                                
+            "class_map" :  {    "1":0,"2":1, "3":2, "4":3, 
+                                "5":4, "6":5, "7":4, "8":6, 
+                                "9":7, "10":8, "11":9, "12":10, "13":11,
+                                "14":12, "15":12, "16":13, "17":13, "18":14, "19":14},
+            "__end": "this field is not used, can delete"
+        },
+        "lip_origin":{
+            "ds_name": "lip",
+            "class_list": [     "hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "coat", "sock", "pants", 
+                                "j-suits", "scarf", "skirt", "face", "l-arm", 
+                                "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe" ],
+            "diaplay_class_ls":[
+                                "hat", "hair", "glove", "glass", 
+                                "u-cloth", "dress", "coat", "sock", "pants", 
+                                "j-suits", "scarf", "skirt", "face", "l-arm", 
+                                "r-arm", "l-leg", "r-leg", "l-shoe", "r-shoe"],
+            "__end": "this field is not used, can delete"
+        }
+    }
+}
