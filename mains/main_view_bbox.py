@@ -24,13 +24,13 @@ if __name__ == '__main__':
                       help='path to latest checkpoint (default: None)')
     args.add_argument('-d', '--device', default=None, type=str,
                       help='indices of GPUs to enable (default: all)')
-
     # custom cli options to modify configuration from default values given in json file.
     CustomArgs = collections.namedtuple('CustomArgs', 'flags type target')
     options = [
         CustomArgs(['--i', '--image_name'], type=str, target='output_image'),
         CustomArgs(['--dopt', '--dataset_option'], type=str, target='use_dataset_config'),
-    ]    
+        CustomArgs(['--dir', '--save-dir'], type=str, target='trainer;save_dir'),
+    ]
     config = ConfigParser.from_args(args, options)
     
 

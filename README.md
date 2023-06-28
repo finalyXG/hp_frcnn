@@ -12,7 +12,7 @@ export PYTHONPATH=./:./utils:./utils/pytorch_vision; python ./mains/main_view_bb
 
 
 where (1) "--i" is the argument to specify the output image name of an sample image with bouding box drawn; (2) "--dopt" is "dataset option", which is used to specify which dataset config option we are going to apply to the dataset, e.g., "lip_origin" means we do not apply relabelling trick while "lip_new_mapping" uses new mappings.
-In this way, you can replace "--i old_lip.png --dopt lip_origin" to "--i new_lip.png --dopt lip_new_mapping", then you can go to the directory "./tmp" to check the different annotaion by different options.
+In this way, you can replace "--i old_lip.png --dopt lip_origin" to "--i new_lip.png --dopt lip_new_mapping", then you can go to the directory "./tmp" to check the different annotaion by different options; (3) "--dir" specifies the logging directory.
 
 
 2. **How to run a training process**
