@@ -113,3 +113,5 @@ __MACOSX/
 notebook/tmp.ipynb
 notebook
 tmp/
+nohup.out
+can_del_saved
