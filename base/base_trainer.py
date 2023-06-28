@@ -142,6 +142,14 @@ class BaseTrainer:
             self.logger.warning("Warning: Architecture configuration given in config file is different from that of "
                                 "checkpoint. This may yield an exception while state_dict is being loaded.")
         self.model.load_state_dict(checkpoint['state_dict'])
+        param_ls = [n for n,p in self.model.named_parameters()]
+        for k, v in checkpoint['state_dict'].items():
+            if k not in param_ls:
+                k1 = k.replace(".0","[0]").replace(".1","[1]").replace(".2","[2]")
+                k1 = k1.replace(".3","[3]").replace(".4","[4]").replace(".5","[5]")
+                tmp_all = eval(f"torch.all(self.model.{k1} == v)")
+                assert tmp_all, k
+        
 
         # load optimizer state from checkpoint only when optimizer type is not changed.
         if not self.config._config.get("disable_load_optimizer_checkpoint"):
