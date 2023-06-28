@@ -31,6 +31,7 @@
             "weight_decay": 0.0005
         }
     },
+    "disable_load_optimizer_checkpoint": true,
     "loss": "nll_loss",
     "metrics": [
         "loss_classifier", "loss_box_reg", "loss_objectness", "loss_rpn_box_reg",
