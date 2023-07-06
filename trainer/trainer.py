@@ -66,7 +66,7 @@ class Trainer(BaseTrainer):
         scaler = None
         batch_idx = 0
         # for images, targets in metric_logger.log_every(data_loader, print_freq, header):
-        self.display_class_ls = np.array(self.config["dataset_options"][self.config["use_dataset_config"]]["diaplay_class_ls"])
+        self.display_class_ls = np.array(self.config["dataset_options"][self.config["use_dataset_config"]]["display_class_ls"])
         
         
         for images, targets in data_loader:
