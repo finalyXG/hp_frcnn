@@ -115,3 +115,5 @@ notebook
 tmp/
 nohup.out
 can_del_saved
+.history
+requirements.txt
